@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
+import 'package:signup_test/loading.dart';
 import 'package:signup_test/services/auth.dart';
 
 class Signup extends StatefulWidget {
@@ -20,6 +21,7 @@ class _SignupState extends State<Signup> {
   final _email_controller = TextEditingController();
   final _password_controller = TextEditingController();
   bool _obscureText = true;
+  bool loading=false;
 
   String _firstname;
   String _lastname;
@@ -45,7 +47,7 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading?Loading():Scaffold(
       appBar: AppBar(
         title: Text("Register"),
         elevation: 0.0,
@@ -177,17 +179,23 @@ class _SignupState extends State<Signup> {
                             onPressed: ()async{
                               form_key.currentState.save();
                               if(form_key.currentState.validate()){
+                                setState(() {
+                                   loading=true;
+                                });
                                 dynamic result=await _auth.signup(_firstname,_lastname,_email,_password);
                                 if(result== 'ERROR_EMAIL_ALREADY_IN_USE'){
                                   setState(() {
+                                    loading=false;
                                     _error="email already in use";
                                   });
                                 }else if(result == 'ERROR_WEAK_PASSWORD'){
                                   setState(() {
+                                    loading=false;
                                     _error="Password must have at least 7 characters";
                                   });
                                 }else if(result.runtimeType.toString()!="User"){
                                   setState(() {
+                                    loading=false;
                                     _error="Error , Can't LogIn, Check your Internet Connection";
                                   });
                                 }

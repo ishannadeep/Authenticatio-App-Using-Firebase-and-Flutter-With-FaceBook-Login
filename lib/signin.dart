@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:signup_test/loading.dart';
 import 'package:signup_test/services/auth.dart';
 
 class Signin extends StatefulWidget {
@@ -18,6 +19,7 @@ class _SigninState extends State<Signin> {
   final _email_controller=TextEditingController();
   final _password_controller=TextEditingController();
   bool _obscureText = true;
+  bool loading=false;
 
   // Toggles the password show status
   void _toggle() {
@@ -33,7 +35,7 @@ class _SigninState extends State<Signin> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return loading ?Loading(): Scaffold(
       appBar: AppBar(
         title: Text("Log In"),
         elevation: 0.0,
@@ -126,30 +128,39 @@ class _SigninState extends State<Signin> {
                             onPressed: ()async{
                               _Signin_key.currentState.save();
                               if(_Signin_key.currentState.validate()){
+                                setState(() {
+                                  loading=true;
+                                });
                                 dynamic result=await _auth.signin(_email,_password);
                                 print("Result instance type : ${result.runtimeType.toString()}");
                                 if(result == 'ERROR_WRONG_PASSWORD'){
                                   print("Password is not correct");
                                   setState(() {
+                                    loading=false;
                                     _error="Password is not correct";
                                   });
                                 }else if( result == 'ERROR_USER_NOT_FOUND'){
+
                                   print("User not found, Please Register or Enter correct email");
                                   setState(() {
+                                    loading=false;
                                     _error="User not found, Please Register or Enter correct email";
                                   });
                                 }else if( result == 'FB cancel'){
                                   print("Canceled");
                                   setState(() {
+                                    loading=false;
                                     _error="Canceled";
                                   });
                                 }else if( result == 'FB error'){
                                   print("Error");
                                   setState(() {
+                                    loading=false;
                                     _error="Error : can't LogIn to Fcaebook";
                                   });
                                 }else if(result.runtimeType.toString()!="User"){
                                   setState(() {
+                                    loading=false;
                                     _error="Error , Can't LogIn, Check your Internet Connection";
                                   });
                                 }
@@ -172,20 +183,27 @@ class _SigninState extends State<Signin> {
                       shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(0))),
                     ),
                     onPressed: ()async{
+                      setState(() {
+                        loading=true;
+                      });
                         dynamic result=await _auth.FBLogin();
                         print("Result instance type : ${result.runtimeType.toString()}");
                         if(result == 'ERROR_WRONG_PASSWORD'){
+
                           print("Password is not correct");
                           setState(() {
+                            loading=false;
                             _error="Password is not correct";
                           });
                         }else if( result == 'ERROR_USER_NOT_FOUND'){
                           print("User not found, Please Register or Enter correct email");
                           setState(() {
+                            loading=false;
                             _error="User not found, Please Register or Enter correct email";
                           });
                         }else if(result.runtimeType.toString()!="User"){
                           setState(() {
+                            loading=false;
                             _error="Error , Can't LogIn, Check your Internet Connection";
                           });
                         }
