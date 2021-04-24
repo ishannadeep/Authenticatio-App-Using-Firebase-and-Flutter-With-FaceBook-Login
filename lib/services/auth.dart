@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:signup_test/models/user.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
@@ -30,8 +29,6 @@ class AuthService {
       return _userformFirebaseUser(user);
     } catch (e) {
       var errorCode = e.code;
-      print("errorCode :$errorCode");
-      print("Cant Sign In error : ${e.toString()}");
       return errorCode;
     }
   }
@@ -48,7 +45,6 @@ class AuthService {
       // Check result status
       switch (res.status) {
         case FacebookLoginStatus.success:
-          print("success fb success!!!!!!!!!!!!!!!!!!!!");
           final FacebookAccessToken fbToken = res.accessToken;
           final AuthCredential credential =
               FacebookAuthProvider.getCredential(accessToken: fbToken.token);
@@ -59,14 +55,11 @@ class AuthService {
             final email = await fb.getUserEmail();
             final imageUrl =
                 await fb.getProfileImageUrl(width: 500, height: 500);
-            print("image url:$imageUrl");
             await DatabaseService(uid: user.uid).updateUserData(
                 profile.firstName, profile.lastName, email, imageUrl);
             return _userformFirebaseUser(user);
           } catch (e) {
             var errorCode = e.code;
-            print("errorCode :$errorCode");
-            print("Cant Sign In error : ${e.toString()}");
             return errorCode;
           }
           break;
@@ -94,7 +87,6 @@ class AuthService {
       return _userformFirebaseUser(user);
     } catch (e) {
       var errorCode = e.code;
-      print("errorCode :$errorCode");
       return errorCode;
     }
   }

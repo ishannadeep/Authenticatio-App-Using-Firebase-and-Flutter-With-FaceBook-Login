@@ -134,26 +134,21 @@ class _SigninState extends State<Signin> {
                                 dynamic result=await _auth.signin(_email,_password);
                                 print("Result instance type : ${result.runtimeType.toString()}");
                                 if(result == 'ERROR_WRONG_PASSWORD'){
-                                  print("Password is not correct");
                                   setState(() {
                                     loading=false;
                                     _error="Password is not correct";
                                   });
                                 }else if( result == 'ERROR_USER_NOT_FOUND'){
-
-                                  print("User not found, Please Register or Enter correct email");
                                   setState(() {
                                     loading=false;
                                     _error="User not found, Please Register or Enter correct email";
                                   });
                                 }else if( result == 'FB cancel'){
-                                  print("Canceled");
                                   setState(() {
                                     loading=false;
                                     _error="Canceled";
                                   });
                                 }else if( result == 'FB error'){
-                                  print("Error");
                                   setState(() {
                                     loading=false;
                                     _error="Error : can't LogIn to Fcaebook";
@@ -187,16 +182,12 @@ class _SigninState extends State<Signin> {
                         loading=true;
                       });
                         dynamic result=await _auth.FBLogin();
-                        print("Result instance type : ${result.runtimeType.toString()}");
                         if(result == 'ERROR_WRONG_PASSWORD'){
-
-                          print("Password is not correct");
                           setState(() {
                             loading=false;
                             _error="Password is not correct";
                           });
                         }else if( result == 'ERROR_USER_NOT_FOUND'){
-                          print("User not found, Please Register or Enter correct email");
                           setState(() {
                             loading=false;
                             _error="User not found, Please Register or Enter correct email";

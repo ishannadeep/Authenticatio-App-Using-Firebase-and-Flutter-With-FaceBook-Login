@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:signup_test/services/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:signup_test/services/database.dart';
 import 'models/user.dart';
 
 class Home extends StatefulWidget {

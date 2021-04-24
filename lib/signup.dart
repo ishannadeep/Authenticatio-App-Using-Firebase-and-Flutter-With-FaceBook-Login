@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:flutter/services.dart';
 import 'package:signup_test/loading.dart';
 import 'package:signup_test/services/auth.dart';
 
