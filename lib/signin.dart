@@ -2,6 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:signup_test/loading.dart';
 import 'package:signup_test/services/auth.dart';
+import 'package:signup_test/signup.dart';
 
 class Signin extends StatefulWidget {
   final Function toggleView;
@@ -45,6 +46,7 @@ class _SigninState extends State<Signin> {
             label: Text('Register'),
             onPressed: ()  {
               widget.toggleView();
+
             },
           ),
         ],
@@ -52,6 +54,8 @@ class _SigninState extends State<Signin> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10.0),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(

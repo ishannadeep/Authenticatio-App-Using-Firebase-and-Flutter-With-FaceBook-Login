@@ -55,7 +55,8 @@ class _SignupState extends State<Signup> {
             icon: Icon(Icons.person),
             label: Text('LogIn'),
             onPressed: ()  {
-              widget.toggleView();
+             widget.toggleView();
+
             },
           ),
         ],
@@ -63,6 +64,8 @@ class _SignupState extends State<Signup> {
       body: Center(
         child: SingleChildScrollView(
           child: Container(
+            margin: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10.0),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
