@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:signup_test/services/auth.dart';
 import 'package:provider/provider.dart';
+import 'loading.dart';
 import 'models/user.dart';
-
+import 'error.dart';
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -22,8 +23,12 @@ class _HomeState extends State<Home> {
             .document(user.uid)
             .snapshots(),
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot1) {
-          if (!snapshot1.hasData) {
-            return Text("Loading");
+
+          if (snapshot1.hasError) {
+            return Error();
+          }
+          if (snapshot1.connectionState == ConnectionState.waiting) {
+            return Loading();
           }
           var userDocument = snapshot1.data;
           return Scaffold(
